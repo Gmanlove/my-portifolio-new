@@ -7,6 +7,7 @@ import {
   faJsSquare,
   faReact,
 } from '@fortawesome/free-brands-svg-icons';
+import gsap from 'gsap';
 import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,8 +21,17 @@ const About = () => {
       setLetterClass('text-animate-hover');
     }, 3000);
 
-    // Return a cleanup function to clear the timeout when the component unmounts
-    return () => clearTimeout(timeoutId);
+    // GSAP animation
+    const tl = gsap.timeline();
+    tl.to('.text-zone', { duration: 1, opacity: 1, y: 0 });
+
+    // Cleanup GSAP timeline and timeout on component unmount
+    return () => {
+      if (tl && typeof tl.kill === 'function') {
+        tl.kill();
+      }
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
