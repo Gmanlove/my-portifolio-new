@@ -27,10 +27,10 @@ const About = () => {
 
     // Cleanup GSAP timeline and timeout on component unmount
     return () => {
-      if (tl && typeof tl.kill === 'function') {
+      clearTimeout(timeoutId);
+      if (tl && tl.kill) {
         tl.kill();
       }
-      clearTimeout(timeoutId);
     };
   }, []);
 
